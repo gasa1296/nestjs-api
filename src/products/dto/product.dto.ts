@@ -4,3 +4,8 @@ export class CreateProductDTO {
   readonly price: number;
   readonly createdAt: Date;
 }
+export class UpdateProductDTO {
+  readonly name: string;
+  readonly description: string;
+  readonly price: number;
+}
