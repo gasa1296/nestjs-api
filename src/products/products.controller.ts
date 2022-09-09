@@ -25,12 +25,12 @@ export class ProductsController {
   }
 
   @Post('/create')
-  async createPost(@Body() createProductDTO: CreateProductDTO) {
+  async createProduct(@Body() createProductDTO: CreateProductDTO) {
     return await this.productService.createProduct(createProductDTO);
   }
 
   @Put('/update/:productId')
-  async updatePost(
+  async updateProduct(
     @Param('productId') productId: string,
     @Body() updateProductDTO: UpdateProductDTO,
   ) {
