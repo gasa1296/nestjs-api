@@ -37,6 +37,7 @@ export class UsersService {
     userId: string,
     updateuserDTO: UpdateUserDTO,
   ): Promise<IUser> {
+    updateuserDTO.password = await argon2.hash(updateuserDTO.password);
     return await this.userModel.findByIdAndUpdate(userId, updateuserDTO);
   }
 
