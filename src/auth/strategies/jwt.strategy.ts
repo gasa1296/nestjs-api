@@ -23,9 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       return null;
     }
-    return {
-      user: user,
-      newToken: await this.authService.login(user),
-    };
+    return user;
   }
 }
