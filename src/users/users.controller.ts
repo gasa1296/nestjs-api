@@ -23,17 +23,17 @@ export class UsersController {
   async getUser(@Param('userId') userId: string) {
     return await this.userService.getUser(userId);
   }
-  @Get('/user/:email')
+  @Get('/:email')
   async getUserByEmail(@Param('email') email: string) {
     return await this.userService.getByEmail(email);
   }
 
-  @Post('/create')
+  @Post('/')
   async createUser(@Body() createUserDTO: CreateUserDTO) {
     return await this.userService.createUser(createUserDTO);
   }
 
-  @Put('/update/:userId')
+  @Put('/:userId')
   async updateUser(
     @Param('userId') userId: string,
     @Body() updateUserDTO: UpdateUserDTO,
@@ -41,7 +41,7 @@ export class UsersController {
     return await this.userService.updateUser(userId, updateUserDTO);
   }
 
-  @Delete('delete/:userId')
+  @Delete('/:userId')
   async deleteUser(@Param('userId') userId: string) {
     return await this.userService.deleteUser(userId);
   }
