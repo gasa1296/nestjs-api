@@ -18,16 +18,11 @@ export class AuthService {
     if (!(await argon2.verify(user.password, pass))) {
       return null;
     }
-    const { password, ...result } = user;
     return user;
   }
 
   async login(user: any) {
-    const currentDate = new Date();
-    const payload = { email: user.email, sub: user.id, date: currentDate };
-    return {
-      access_token: this.jwtService.sign(payload),
-      date: currentDate,
-    };
+    const payload = { email: user.email, sub: user.id, date: new Date() };
+    return await this.jwtService.signAsync(payload);
   }
 }
