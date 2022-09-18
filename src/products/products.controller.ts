@@ -6,11 +6,14 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from './../auth/guards/jwt-auth.guard';
 import { CreateProductDTO, UpdateProductDTO } from './dto/product.dto';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@UseGuards(JwtAuthGuard)
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 
@@ -24,12 +27,12 @@ export class ProductsController {
     return await this.productService.getProduct(productId);
   }
 
-  @Post('/create')
+  @Post('/')
   async createProduct(@Body() createProductDTO: CreateProductDTO) {
     return await this.productService.createProduct(createProductDTO);
   }
 
-  @Put('/update/:productId')
+  @Put('/:productId')
   async updateProduct(
     @Param('productId') productId: string,
     @Body() updateProductDTO: UpdateProductDTO,
@@ -37,7 +40,7 @@ export class ProductsController {
     return await this.productService.updateProduct(productId, updateProductDTO);
   }
 
-  @Delete('delete/:productId')
+  @Delete('/:productId')
   async deleteProduct(@Param('productId') productId: string) {
     return await this.productService.deleteProduct(productId);
   }
