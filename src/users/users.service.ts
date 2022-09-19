@@ -11,13 +11,11 @@ export class UsersService {
   constructor(@InjectModel('Users') private readonly userModel: Model<IUser>) {}
 
   async getUsers(): Promise<IUser[]> {
-    const users = await this.userModel.find();
-    return users;
+    return await this.userModel.find();
   }
 
   async getUser(userId: string): Promise<IUser> {
-    const user = await this.userModel.findById(userId);
-    return user;
+    return await this.userModel.findById(userId).populate('orders').exec();
   }
 
   async getByEmail(email: string): Promise<IUser> {
@@ -39,6 +37,11 @@ export class UsersService {
   ): Promise<IUser> {
     updateuserDTO.password = await argon2.hash(updateuserDTO.password);
     return await this.userModel.findByIdAndUpdate(userId, updateuserDTO);
+  }
+  async addOrderToUser(userId: string, orderId: string): Promise<IUser> {
+    return await this.userModel.findByIdAndUpdate(userId, {
+      $push: { orders: orderId },
+    });
   }
 
   async deleteUser(userId: string): Promise<IUser> {

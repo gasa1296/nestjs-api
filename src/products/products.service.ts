@@ -32,12 +32,17 @@ export class ProductsService {
   async deleteProduct(productId: string): Promise<IProduct> {
     return await this.productModel.findByIdAndDelete(productId);
   }
+  async addOrderToProduct(
+    productId: string,
+    orderId: string,
+  ): Promise<IProduct> {
+    return await this.productModel.findByIdAndUpdate(productId, {
+      $push: { orders: orderId },
+    });
+  }
   async reduceStock(productId: string, quantity: number): Promise<IProduct> {
-    const product = await this.productModel.findById(productId);
-    if (product.stock) {
-      product.stock = product.stock - quantity;
-      return await this.productModel.findByIdAndUpdate(productId, product);
-    }
-    return product;
+    return await this.productModel.findByIdAndUpdate(productId, {
+      $inc: { stock: -quantity },
+    });
   }
 }

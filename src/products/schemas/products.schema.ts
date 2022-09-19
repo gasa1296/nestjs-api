@@ -6,6 +6,7 @@ export const ProductSchema = new Schema<IProduct>({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   stock: { type: Number },
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Orders' }],
   createdAt: {
     type: Date,
     default: Date.now,
