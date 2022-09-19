@@ -11,12 +11,10 @@ export class ProductsService {
     @InjectModel('Products') private readonly productModel: Model<IProduct>,
   ) {}
   async getProducts(): Promise<IProduct[]> {
-    const products = await this.productModel.find();
-    return products;
+    return await this.productModel.find();
   }
   async getProduct(productId: string): Promise<IProduct> {
-    const product = await this.productModel.findById(productId);
-    return product;
+    return await this.productModel.findById(productId);
   }
   async createProduct(createProductDTO: CreateProductDTO): Promise<IProduct> {
     const product = await new this.productModel(createProductDTO);
