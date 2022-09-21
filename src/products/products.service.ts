@@ -40,9 +40,10 @@ export class ProductsService {
       $push: { orders: orderId },
     });
   }
-  async reduceStock(productId: string, quantity: number): Promise<IProduct> {
-    return await this.productModel.findByIdAndUpdate(productId, {
-      $inc: { stock: -quantity },
-    });
+  async addOrderToProducts(productsIds: string[], orderId: string) {
+    this.productModel.updateMany(
+      { _id: { $in: productsIds } },
+      { $push: { orders: orderId } },
+    );
   }
 }
